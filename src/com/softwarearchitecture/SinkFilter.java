@@ -10,23 +10,17 @@ import java.util.List;
 
 public class SinkFilter extends FilterTemplate {
 
-    private List<String> stringHeaderArray;
-    private List<String> stringArrayFormat;
     private Calendar timeStamp = Calendar.getInstance();
     private SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy:dd:hh:mm:ss");
 
     private String fileName = null;
-    private String stringFormat = null;
+    private String stringFormat = "%-20s %-20s %-20s %-20s %-20s %-20s %n";
 
     private int nFrame = 0;
     private String speed, temperature, altitude, pressure, pitch;
 
-    public SinkFilter(String fileName, String stringFormat, List<String> stringHeaderArray, List<String> stringArrayFormat) {
+    public SinkFilter(String fileName) {
         this.fileName = fileName;
-        this.stringFormat = stringFormat;
-        this.stringHeaderArray = stringHeaderArray;
-        this.stringArrayFormat = Arrays.asList(timeStampFormat.format(timeStamp.getTime()),
-                speed, altitude, temperature, pressure, pitch);
     }
 
     public void run() {
@@ -60,7 +54,7 @@ public class SinkFilter extends FilterTemplate {
                         speed = String.valueOf(Double.longBitsToDouble(measurement));
                     }
 
-                    if (id == Utils.TIME_ID && nFrame > 1) {
+                    if (id == Utils.TEMPERATURE_ID) {
                         System.out.println("\n" + this.getName() + "::Sink Writing" + "\n");
                         printWriter.write(String.format(stringFormat, timeStampFormat.format(timeStamp.getTime()),
                                 speed, altitude, pressure, temperature, pitch));

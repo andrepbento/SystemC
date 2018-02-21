@@ -11,10 +11,7 @@ public class Plumber {
 
         OrderFilter orderFilter = new OrderFilter();
 
-        SinkFilter sinkFilter = new SinkFilter("Output.dat",
-                "%-20s %-20s %-20s %-20s %-20s %-20s %n",
-                Arrays.asList("Time:", "Speed(Knots):", "Altitude(Feet):", "Pressure(psi):", "Temperature(F):", "Pitch():"),
-                null);
+        SinkFilter sinkFilter = new SinkFilter("Output.dat");
 
         orderFilter.Connect(dataSourceA);
         orderFilter.Connect(dataSourceB);
